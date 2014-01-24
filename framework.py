@@ -13,7 +13,6 @@ Framework containing PySide distributions for the Softimage engine
 """
 
 import sgtk
-import platform
 import sys
 import os
 
@@ -30,8 +29,8 @@ class SoftimageQtFramework(sgtk.platform.Framework):
         
     def define_qt_base(self):
         """
-        Make sure that p4python is available and if it's not then add it to the path if 
-        we have a version we can use.
+        Load PySide/PyQt to use for the tk-softimage engine.  Returns a dictionary of the modules required
+        by the engine to support Qt UI's
         """
         # proxy class used when QT does not exist on the system.
         # this will raise an exception when any QT code tries to use it
@@ -74,7 +73,8 @@ class SoftimageQtFramework(sgtk.platform.Framework):
                 base["qt_core"] = QtCore
                 base["qt_gui"] = QtGui
                 base["dialog_base"] = QtGui.QDialog
-                self.log_debug("Successfully initialized PyQt %s located in %s." % (QtCore.PYQT_VERSION_STR, PyQt4.__file__))
+                self.log_debug("Successfully initialized PyQt %s located in %s." 
+                               % (QtCore.PYQT_VERSION_STR, PyQt4.__file__))
                 have_qt = True
             except ImportError:
                 pass
@@ -108,7 +108,8 @@ class SoftimageQtFramework(sgtk.platform.Framework):
                     base["qt_core"] = QtCore
                     base["qt_gui"] = QtGui
                     base["dialog_base"] = QtGui.QDialog
-                    self.log_debug("Successfully initialized PySide %s located in %s." % (PySide.__version__, PySide.__file__))
+                    self.log_debug("Successfully initialized PySide %s located in %s." 
+                                   % (PySide.__version__, PySide.__file__))
                     self._has_ui = True
                 except ImportError:
                     pass
