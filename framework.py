@@ -50,10 +50,17 @@ class SoftimageQtFramework(sgtk.platform.Framework):
                 from PySide import QtCore, QtGui
                 import PySide
                 
+                # Some old versions of PySide don't include version information
+                # so add something here so that we can use PySide.__version__ 
+                # later without having to check!
+                if not hassattr(PySide, "__version__"):
+                    PySide.__version__ = "<unknown>"
+                
                 base["qt_core"] = QtCore
                 base["qt_gui"] = QtGui
                 base["dialog_base"] = QtGui.QDialog
-                self.log_debug("Successfully initialized PySide %s located in %s." % (PySide.__version__, PySide.__file__))
+                self.log_debug("Successfully initialized PySide '%s' located in %s." 
+                               % (PySide.__version__, PySide.__file__))
                 have_qt = True
             except ImportError:
                 pass
@@ -73,7 +80,7 @@ class SoftimageQtFramework(sgtk.platform.Framework):
                 base["qt_core"] = QtCore
                 base["qt_gui"] = QtGui
                 base["dialog_base"] = QtGui.QDialog
-                self.log_debug("Successfully initialized PyQt %s located in %s." 
+                self.log_debug("Successfully initialized PyQt '%s' located in %s." 
                                % (QtCore.PYQT_VERSION_STR, PyQt4.__file__))
                 have_qt = True
             except ImportError:
@@ -108,7 +115,7 @@ class SoftimageQtFramework(sgtk.platform.Framework):
                     base["qt_core"] = QtCore
                     base["qt_gui"] = QtGui
                     base["dialog_base"] = QtGui.QDialog
-                    self.log_debug("Successfully initialized PySide %s located in %s." 
+                    self.log_debug("Successfully initialized PySide '%s' located in %s." 
                                    % (PySide.__version__, PySide.__file__))
                     self._has_ui = True
                 except ImportError:
