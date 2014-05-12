@@ -53,7 +53,7 @@ class SoftimageQtFramework(sgtk.platform.Framework):
                 # Some old versions of PySide don't include version information
                 # so add something here so that we can use PySide.__version__ 
                 # later without having to check!
-                if not hassattr(PySide, "__version__"):
+                if not hasattr(PySide, "__version__"):
                     PySide.__version__ = "<unknown>"
                 
                 base["qt_core"] = QtCore
